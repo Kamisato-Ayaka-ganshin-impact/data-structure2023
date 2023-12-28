@@ -1,6 +1,7 @@
 #include <graphics.h>
 #include <iostream>
 #include <string>
+#include<Windows.h>
 #include <sstream>
 #include"showintroduce.h"
 using namespace std;
@@ -116,6 +117,15 @@ void drawOutputBox(int x, int y, int width, int height, const char* text) {
     settextcolor(BLACK);
     outtextxy(x + 5, y + 5, text);
 }
+//判断你的输入是否合法
+void panduahefa(char inputText[100]) {
+    for (int i = 0; inputText[i] != '\0'; i++) {
+        if (!isdigit(inputText[i]) && inputText[i] != ' ') {
+            MessageBox(NULL, "杂鱼，我给了你那么多提示，你还是不会用吗，输入框只能输入数字和空格啊", "错误提示", MB_OK | MB_ICONERROR);
+            break;
+        }
+    }
+}
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
@@ -178,7 +188,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             char inputText2[100] = "";
             GetWindowText(hwndInput1, inputText1, sizeof(inputText1));
             GetWindowText(hwndInput2, inputText2, sizeof(inputText2));
-
+            panduahefa(inputText1);
+            panduahefa(inputText2);
             // 将文本转换为多项式
             stringstream ss1(inputText1);
             stringstream ss2(inputText2);
@@ -223,6 +234,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 int main() {
     initIntroduce();
     showExtraIntroduce();
+    showThirdPage();
     // 注册窗口类
     WNDCLASS wndClass = { 0 };
     wndClass.lpfnWndProc = WindowProc;
@@ -254,6 +266,6 @@ int main() {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
-    showThirdPage();
+   
     return 0;
 }
