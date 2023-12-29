@@ -7,7 +7,7 @@
 using namespace std;
 // 多项式节点
 struct Term {
-    double coefficient;//底数  好像叫这个名字
+    double coefficient;//系数
     int exponent;//指数
     Term* next;//下一项的指针
 
@@ -116,6 +116,10 @@ HWND hwndInput2; // 编辑框2句柄
 HWND hwndButton; // 按钮句柄
 HWND hwndOutput; // 输出框句柄
 
+HWND hwndText1;  // 文本框1句柄
+HWND hwndText2;  // 文本框2句柄
+HWND hwndText3;  // 文本框3句柄
+
 void drawTextBox(int x, int y, int width, int height, const char* text) {
     setfillcolor(LIGHTGRAY);
     setlinecolor(BLACK);
@@ -161,6 +165,17 @@ void panduahefa(char inputText[100]) {
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
     case WM_CREATE:
+        // 创建文本框1
+        hwndText1 = CreateWindow(
+            "STATIC",            // 类名
+            "输入框1",           // 文本内容
+            WS_VISIBLE | WS_CHILD, // 窗口样式
+            265, 55, 60, 20,      // 窗口位置和大小
+            hwnd,                // 父窗口句柄
+            NULL,                // 菜单句柄
+            NULL,                // 实例句柄
+            NULL                 // 参数
+        );
         // 创建编辑框1
         hwndInput1 = CreateWindow(
             "EDIT",               // 类名
@@ -172,7 +187,17 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             NULL,                // 实例句柄
             NULL                 // 参数
         );
-
+        // 创建文本框2
+        hwndText2 = CreateWindow(
+            "STATIC",            // 类名
+            "输入框2",           // 文本内容
+            WS_VISIBLE | WS_CHILD, // 窗口样式
+            265, 95, 60, 20,     // 窗口位置和大小
+            hwnd,                // 父窗口句柄
+            NULL,                // 菜单句柄
+            NULL,                // 实例句柄
+            NULL                 // 参数
+        );
         // 创建编辑框2
         hwndInput2 = CreateWindow(
             "EDIT",               // 类名
@@ -196,7 +221,17 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             NULL,                // 实例句柄
             NULL                 // 参数
         );
-
+        // 创建文本框3
+        hwndText3 = CreateWindow(
+            "STATIC",            // 类名
+            "输出框",           // 文本内容
+            WS_VISIBLE | WS_CHILD, // 窗口样式
+            330, 160, 60, 20,     // 窗口位置和大小
+            hwnd,                // 父窗口句柄
+            NULL,                // 菜单句柄
+            NULL,                // 实例句柄
+            NULL                 // 参数
+        );
         // 创建输出框
         hwndOutput = CreateWindow(
             "EDIT",               // 类名
