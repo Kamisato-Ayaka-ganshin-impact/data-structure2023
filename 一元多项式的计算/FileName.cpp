@@ -21,8 +21,8 @@ private:
 
 public:
     Polynomial() : head(nullptr) {}
-
-    void addTerm(double coef, int exp) {
+    //有bug的函数
+    /*void addTerm(double coef, int exp) {
         Term* newNode = new Term(coef, exp);
         if (head == nullptr || exp > head->exponent) {
             newNode->next = head;
@@ -35,6 +35,36 @@ public:
             }
             newNode->next = current->next;
             current->next = newNode;
+        }
+    }*/
+    void addTerm(double coef, int exp) {
+        Term* newNode = new Term(coef, exp);
+
+        // 寻找是否已经存在相同指数的项
+        Term* current = head;
+        Term* prev = nullptr;
+
+        while (current != nullptr && exp < current->exponent) {
+            prev = current;
+            current = current->next;
+        }
+
+        if (current != nullptr && exp == current->exponent) {
+            // 如果存在相同指数的项，则将系数相加
+            current->coefficient += coef;
+            delete newNode; // 删除新节点，因为已经合并
+        }
+        else {
+            // 否则插入新节点
+            newNode->next = current;
+            if (prev == nullptr) {
+                // 新节点插入到头部
+                head = newNode;
+            }
+            else {
+                // 新节点插入到中间
+                prev->next = newNode;
+            }
         }
     }
 
